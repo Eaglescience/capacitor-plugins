@@ -4,7 +4,7 @@ export default {
     {
       file: 'dist/plugin.js',
       format: 'iife',
-      name: 'capacitorLocalNotifications',
+      name: 'essLocalNotifications',
       globals: {
         '@capacitor/core': 'capacitorExports',
       },
