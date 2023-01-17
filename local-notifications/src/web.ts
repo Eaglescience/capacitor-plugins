@@ -17,6 +17,36 @@ export class LocalNotificationsWeb
   implements LocalNotificationsPlugin
 {
   protected pending: LocalNotificationSchema[] = [];
+  protected deliveredNotifications: Notification[] = [];
+
+  async getDeliveredNotifications(): Promise<DeliveredNotifications> {
+    const deliveredSchemas = [];
+    for (const notification of this.deliveredNotifications) {
+      const deliveredSchema: LocalNotificationSchema = {
+        title: notification.title,
+        id: parseInt(notification.tag),
+        body: notification.body,
+      };
+      deliveredSchemas.push(deliveredSchema);
+    }
+    return {
+      notifications: deliveredSchemas,
+    };
+  }
+
+  async removeDeliveredNotifications(
+    delivered: DeliveredNotifications,
+  ): Promise<void> {
+    for (const toRemove of delivered.notifications) {
+      const found = this.deliveredNotifications.find(
+        n => n.tag === String(toRemove.id),
+      );
+      found?.close();
+      this.deliveredNotifications = this.deliveredNotifications.filter(
+        () => !found,
+      );
+    }
+  }
 
   async createChannel(): Promise<void> {
     throw this.unimplemented('Not implemented on web.');
@@ -176,6 +206,7 @@ export class LocalNotificationsWeb
       this.onShow.bind(this, notification),
       false,
     );
+    this.deliveredNotifications.push(localNotification);
     return localNotification;
   }
 

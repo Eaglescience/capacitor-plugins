@@ -13,4 +13,6 @@ CAP_PLUGIN(LocalNotificationsPlugin, "LocalNotifications",
     CAP_PLUGIN_METHOD(deleteChannel, CAPPluginReturnPromise);
     CAP_PLUGIN_METHOD(listChannels, CAPPluginReturnPromise);
     CAP_PLUGIN_METHOD(removeAllListeners, CAPPluginReturnNone);
+    CAP_PLUGIN_METHOD(getDeliveredNotifications, CAPPluginReturnPromise);
+    CAP_PLUGIN_METHOD(removeDeliveredNotifications, CAPPluginReturnPromise);
 )
