@@ -10,6 +10,7 @@ import type {
   PermissionStatus,
   ScheduleOptions,
   ScheduleResult,
+  DeliveredNotifications
 } from './definitions';
 
 export class LocalNotificationsWeb
