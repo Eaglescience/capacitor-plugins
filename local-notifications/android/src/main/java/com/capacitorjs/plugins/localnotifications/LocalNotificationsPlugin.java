@@ -1,5 +1,8 @@
 package com.capacitorjs.plugins.localnotifications;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import com.getcapacitor.Bridge;
 import com.getcapacitor.JSArray;
@@ -13,6 +16,10 @@ import com.getcapacitor.annotation.Permission;
 import java.util.List;
 import java.util.Map;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.os.Build;
 import android.service.notification.StatusBarNotification;
 
 @CapacitorPlugin(name = "LocalNotifications", permissions = @Permission(strings = {}, alias = "display"))
@@ -20,6 +27,7 @@ public class LocalNotificationsPlugin extends Plugin {
 
     private static Bridge staticBridge = null;
     private LocalNotificationManager manager;
+    public NotificationManager notificationManager;
     private NotificationStorage notificationStorage;
     private NotificationChannelManager notificationChannelManager;
 
@@ -30,6 +38,7 @@ public class LocalNotificationsPlugin extends Plugin {
         manager = new LocalNotificationManager(notificationStorage, getActivity(), getContext(), this.bridge.getConfig());
         manager.createNotificationChannel();
         notificationChannelManager = new NotificationChannelManager(getActivity());
+        notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
         staticBridge = this.bridge;
     }
 
